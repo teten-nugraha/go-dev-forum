@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/joho/godotenv"
+	"github.com/teten-nugraha/go-dev-forum/config"
 	"log"
 	"os"
 
@@ -10,6 +11,9 @@ import (
 
 func main() {
 	app := fiber.New()
+
+	// db connection
+	config.Connect()
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
