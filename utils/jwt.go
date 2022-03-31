@@ -8,18 +8,26 @@ import (
 	"time"
 )
 
-func GenerateJwt(issuer string) (string, error) {
+func GenerateJwt(email string) (string, error) {
 
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 	SECRET := os.Getenv("SECRET")
+	var mySigningKey = []byte(SECRET)
 
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer:    issuer,
-		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(), // 1 day
-	})
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
 
-	return claims.SignedString([]byte(SECRET))
+	claims["authorized"] = true
+	claims["email"] = email
+	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
+
+	tokenString, err := token.SignedString(mySigningKey)
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, err
 }
