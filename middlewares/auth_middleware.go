@@ -2,26 +2,20 @@ package middlewares
 
 import (
 	"github.com/gofiber/fiber/v2"
-	jwtware "github.com/gofiber/jwt/v2"
-	"github.com/joho/godotenv"
-	"log"
-	"os"
+	"github.com/teten-nugraha/go-dev-forum/utils"
 )
 
-func IsAuthenticated() fiber.Handler {
+func IsAuthenticated(c *fiber.Ctx) error {
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	cookie := c.Cookies("jwt")
+
+	if _, err := utils.ParseJwt(cookie); err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(fiber.Map{
+			"message": "unauthorized",
+		})
 	}
-	SECRET := os.Getenv("SECRET")
-
-	return jwtware.New(jwtware.Config{
-		SuccessHandler: AuthSuccess,
-		ErrorHandler:   AuthError,
-		SigningKey:     []byte(SECRET),
-		SigningMethod:  "HS256",
-	})
+	return c.Next()
 
 }
 

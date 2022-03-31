@@ -31,3 +31,23 @@ func GenerateJwt(email string) (string, error) {
 
 	return tokenString, err
 }
+
+func ParseJwt(cookie string) (string, error) {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	SECRET := os.Getenv("SECRET")
+
+	token, err := jwt.ParseWithClaims(cookie, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+		return []byte(SECRET), nil
+	})
+	if err != nil || !token.Valid {
+		return "", err
+	}
+
+	claims := token.Claims.(*jwt.StandardClaims)
+
+	return claims.Issuer, nil
+}
