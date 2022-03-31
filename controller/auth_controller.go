@@ -5,6 +5,7 @@ import (
 	"github.com/teten-nugraha/go-dev-forum/models"
 	"github.com/teten-nugraha/go-dev-forum/service"
 	"net/http"
+	"time"
 )
 
 func Register(c *fiber.Ctx) error {
@@ -49,9 +50,17 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	c.Status(http.StatusOK)
-	return c.JSON(fiber.Map{
-		"success": true,
-		"token":   token,
+	// create cookie
+	cookie := fiber.Cookie{
+		Name:     "jwt",
+		Value:    token,
+		Expires:  time.Now().Add(time.Hour * 24),
+		HTTPOnly: true,
+	}
+
+	c.Cookie(&cookie)
+
+	return c.Status(http.StatusOK).JSON(fiber.Map{
+		"message": "success",
 	})
 }
