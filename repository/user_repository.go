@@ -5,7 +5,7 @@ import (
 	"github.com/teten-nugraha/go-dev-forum/models"
 )
 
-func FundUserById(id int64) models.User {
+func FindUserById(id int64) models.User {
 	var user models.User
 
 	config.DB.Where("id = ?", id).Find(&user)
