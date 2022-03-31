@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/teten-nugraha/go-dev-forum/models"
 	"github.com/teten-nugraha/go-dev-forum/service"
+	"net/http"
 )
 
 func Register(c *fiber.Ctx) error {
@@ -27,6 +28,30 @@ func Register(c *fiber.Ctx) error {
 	c.Status(200)
 	return c.JSON(fiber.Map{
 		"success": true,
-		"data":    user,
+		"user":    user,
+	})
+}
+
+func Login(c *fiber.Ctx) error {
+
+	var data map[string]string
+	if err := c.BodyParser(&data); err != nil {
+		return err
+	}
+
+	token, err := service.SignIn(data["email"], data["password"])
+	if err != nil {
+		c.Status(http.StatusInternalServerError)
+		return c.JSON(fiber.Map{
+			"error":   true,
+			"code":    400,
+			"message": err.Error(),
+		})
+	}
+
+	c.Status(http.StatusOK)
+	return c.JSON(fiber.Map{
+		"success": true,
+		"token":   token,
 	})
 }

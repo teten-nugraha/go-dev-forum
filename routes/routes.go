@@ -10,4 +10,5 @@ func SetupRoutes(server *fiber.App) {
 	api := server.Group("/api/v1")
 
 	api.Post("/signUp", controller.Register)
+	api.Post("/signIn", controller.Login)
 }
