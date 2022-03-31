@@ -1,8 +1,11 @@
 package main
 
 import (
+	"github.com/gofiber/fiber/v2/middleware/cors"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	"github.com/teten-nugraha/go-dev-forum/config"
+	"github.com/teten-nugraha/go-dev-forum/routes"
 	"log"
 	"os"
 
@@ -15,9 +18,18 @@ func main() {
 	// db connection
 	config.Connect()
 
+	// allow cors
+	app.Use(cors.New())
+
+	// add logger
+	app.Use(logger.New())
+
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World!")
 	})
+
+	// setup routes
+	routes.SetupRoutes(app)
 
 	// load env
 	err := godotenv.Load()
