@@ -18,16 +18,3 @@ func IsAuthenticated(c *fiber.Ctx) error {
 	return c.Next()
 
 }
-
-func AuthError(c *fiber.Ctx, e error) error {
-	c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-		"error": "Unauthorized",
-		"msg":   e.Error(),
-	})
-	return nil
-}
-
-func AuthSuccess(c *fiber.Ctx) error {
-	c.Next()
-	return nil
-}
