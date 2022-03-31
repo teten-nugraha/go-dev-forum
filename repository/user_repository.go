@@ -13,3 +13,8 @@ func FindUserByEmail(email string) models.User {
 
 	return user
 }
+
+func CreateUser(user models.User) models.User {
+	config.DB.Create(&user)
+	return user
+}

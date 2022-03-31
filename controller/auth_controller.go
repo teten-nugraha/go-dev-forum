@@ -16,10 +16,10 @@ func Register(c *fiber.Ctx) error {
 	var user models.User
 	user, err := service.SignUp(data["username"], data["email"], data["password"], data["password_confirmation"])
 	if err != nil {
-		c.Status(401)
+		c.Status(400)
 		return c.JSON(fiber.Map{
 			"error":   true,
-			"code":    401,
+			"code":    400,
 			"message": err.Error(),
 		})
 	}
