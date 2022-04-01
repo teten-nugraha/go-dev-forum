@@ -28,7 +28,7 @@ func UpdateTodo(todo models.Todo) models.Todo {
 	return todoUpdated
 }
 
-func SetFinishTodo(id uint64) models.Todo {
+func SetFinishTodo(id uint) models.Todo {
 
 	todoFinished := repository.SetFinish(id)
 
