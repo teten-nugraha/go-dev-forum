@@ -24,6 +24,7 @@ func FetchTodos() []models.Todo {
 func CreateTodo(todo models.Todo) models.Todo {
 
 	todo.CreatedAt = time.Now()
+	todo.IsFinish = false
 
 	config.DB.Create(&todo)
 
@@ -45,7 +46,8 @@ func SetFinish(id uint) models.Todo {
 
 	config.DB.Where("id = ?", id).First(&todo)
 
-	todo.FinishAt = time.Now()
+	todo.FinishedAt = time.Now()
+	todo.IsFinish = true
 
 	config.DB.Model(&todo).Updates(&todo)
 
