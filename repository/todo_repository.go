@@ -39,7 +39,7 @@ func UpdateTodo(todo models.Todo) models.Todo {
 	return todo
 }
 
-func SetFinish(id uint64) models.Todo {
+func SetFinish(id uint) models.Todo {
 
 	var todo models.Todo
 
