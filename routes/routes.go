@@ -24,4 +24,6 @@ func SetupRoutes(server *fiber.App) {
 	authRoute.Put("/todos/:id", controller.UpdateTodo)
 	authRoute.Post("/todos/finish/:id", controller.FinishTodo)
 
+	// counter
+	authRoute.Get("/counters", controller.Counter)
 }

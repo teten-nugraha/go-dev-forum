@@ -54,3 +54,12 @@ func SetFinish(id uint) models.Todo {
 	return todo
 
 }
+
+func FindAllByUserId(user_id uint) []models.Todo {
+
+	var todos []models.Todo
+
+	config.DB.Where("user_id = ?", user_id).Order("created_at DESC").Find(&todos)
+
+	return todos
+}
