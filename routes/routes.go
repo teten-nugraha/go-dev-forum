@@ -18,4 +18,10 @@ func SetupRoutes(server *fiber.App) {
 	// profile
 	authRoute.Get("/profile", controller.GetProfile)
 
+	// todos
+	authRoute.Get("/todos", controller.FetchTodos)
+	authRoute.Post("/todos", controller.CreateTodo)
+	authRoute.Put("/todos/:id", controller.UpdateTodo)
+	authRoute.Post("/todos/finish/:id", controller.FinishTodo)
+
 }

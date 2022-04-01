@@ -1,11 +1,12 @@
 package controller
 
 import (
+	"net/http"
+	"time"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/teten-nugraha/go-dev-forum/models"
 	"github.com/teten-nugraha/go-dev-forum/service"
-	"net/http"
-	"time"
 )
 
 func Register(c *fiber.Ctx) error {

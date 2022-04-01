@@ -1,12 +1,13 @@
 package config
 
 import (
+	"log"
+	"os"
+
 	"github.com/joho/godotenv"
 	"github.com/teten-nugraha/go-dev-forum/models"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"log"
-	"os"
 )
 
 var DB *gorm.DB
@@ -35,6 +36,6 @@ func Connect() {
 	DB = db
 
 	// Migrations models/*
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.Todo{})
 
 }
