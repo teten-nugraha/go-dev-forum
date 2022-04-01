@@ -10,4 +10,5 @@ type Todo struct {
 	IsFinish  bool      `json:"is_finish"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+	FinishAt  time.Time `json:"finish_at"`
 }
