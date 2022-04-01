@@ -3,8 +3,8 @@ package models
 import "time"
 
 type Todo struct {
-	Id        int64     `json:"id" gorm:"primary_key;auto_increment;not_null"`
-	UserId    int64     `json:"user_id"`
+	Id        uint      `json:"id" gorm:"primary_key;auto_increment;not_null"`
+	UserId    uint      `json:"user_id"`
 	User      User      `json:"user" gorm:"foreignKey:UserId"`
 	Nama      string    `json:"nama"`
 	IsFinish  bool      `json:"is_finish"`
