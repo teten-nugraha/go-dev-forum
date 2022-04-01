@@ -23,6 +23,7 @@ func SetupRoutes(server *fiber.App) {
 	authRoute.Post("/todos", controller.CreateTodo)
 	authRoute.Put("/todos/:id", controller.UpdateTodo)
 	authRoute.Post("/todos/finish/:id", controller.FinishTodo)
+	authRoute.Get("/todos/done", controller.GetTodoDone)
 
 	// counter
 	authRoute.Get("/counters", controller.Counter)

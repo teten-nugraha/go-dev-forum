@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"net/http"
 	"strconv"
 
 	"github.com/gofiber/fiber/v2"
@@ -101,5 +102,20 @@ func FinishTodo(c *fiber.Ctx) error {
 	return c.JSON(fiber.Map{
 		"success": true,
 		"todo":    todoFinished,
+	})
+}
+
+func GetTodoDone(c *fiber.Ctx) error {
+
+	cookie := c.Cookies("jwt")
+	idS, _ := utils.ParseJwt(cookie)
+	userId, _ := strconv.Atoi(idS)
+
+	todos_done := service.GetDuration(uint(userId))
+
+	c.Status(http.StatusOK)
+	return c.JSON(fiber.Map{
+		"success": true,
+		"todos":   todos_done,
 	})
 }
