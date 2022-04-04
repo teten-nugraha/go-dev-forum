@@ -1,13 +1,14 @@
 package main
 
 import (
+	"log"
+	"os"
+
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 	"github.com/teten-nugraha/go-dev-forum/config"
 	"github.com/teten-nugraha/go-dev-forum/routes"
-	"log"
-	"os"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -19,7 +20,10 @@ func main() {
 	config.Connect()
 
 	// allow cors
-	app.Use(cors.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "http://localhost:3000",
+		AllowMethods: "GET,POST,HEAD,PUT,DELETE,PATCH",
+	}))
 
 	// add logger
 	app.Use(logger.New())
