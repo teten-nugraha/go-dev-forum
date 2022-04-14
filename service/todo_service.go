@@ -35,3 +35,31 @@ func SetFinishTodo(id uint) models.Todo {
 	return todoFinished
 
 }
+
+func GetDuration(user_id uint) []models.TodosDone {
+
+	var todos_done []models.TodosDone
+
+	todos := repository.FindAllByUserId(user_id)
+
+	if len(todos) > 0 {
+		for i, _ := range todos {
+			if todos[i].IsFinish == true {
+				var todo_done models.TodosDone
+
+				todo_done.Id = todos[i].Id
+				todo_done.Nama = todos[i].Nama
+				todo_done.CreatedAt = todos[i].CreatedAt
+				todo_done.FinishedAt = todos[i].FinishedAt
+
+				durationTime := todo_done.FinishedAt.Sub(todo_done.CreatedAt)
+				duration := int(durationTime.Hours() / 24) // dalam hari
+				todo_done.Duration = duration
+
+				todos_done = append(todos_done, todo_done)
+			}
+		}
+	}
+
+	return todos_done
+}
