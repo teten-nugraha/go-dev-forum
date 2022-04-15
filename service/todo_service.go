@@ -1,15 +1,27 @@
 package service
 
 import (
+	"github.com/teten-nugraha/go-dev-forum/dto"
 	"github.com/teten-nugraha/go-dev-forum/models"
 	"github.com/teten-nugraha/go-dev-forum/repository"
 )
 
-func LoadTodos() []models.Todo {
+func LoadTodos() []dto.FetchTodoDto {
+
+	var todoDos []dto.FetchTodoDto
 
 	todos := repository.FetchTodos()
 
-	return todos
+	for i, _ := range todos {
+		var dto dto.FetchTodoDto
+		dto.Id = todos[i].Id
+		dto.Name = todos[i].Nama
+		dto.CreatedAt = todos[i].CreatedAt
+
+		todoDos = append(todoDos, dto)
+	}
+
+	return todoDos
 
 }
 
