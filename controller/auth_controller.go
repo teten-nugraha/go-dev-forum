@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/teten-nugraha/go-dev-forum/models"
@@ -51,18 +50,10 @@ func Login(c *fiber.Ctx) error {
 		})
 	}
 
-	// create cookie
-	cookie := fiber.Cookie{
-		Name:     "jwt",
-		Value:    token,
-		Expires:  time.Now().Add(time.Hour * 24),
-		HTTPOnly: true,
-		Secure:   true,
-	}
-
-	c.Cookie(&cookie)
-
-	return c.Status(http.StatusOK).JSON(fiber.Map{
+	c.Status(200)
+	return c.JSON(fiber.Map{
 		"success": true,
+		"token":    token,
 	})
+
 }
