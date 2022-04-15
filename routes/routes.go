@@ -39,4 +39,5 @@ func SetupRoutes(server *fiber.App) {
 
 	// counter
 	authRoute.Get("/counters", controller.Counter)
+
 }
