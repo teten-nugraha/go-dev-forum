@@ -29,7 +29,7 @@ func main() {
 	app.Use(logger.New())
 
 	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
+		return c.SendString("API Service is UP 🚀")
 	})
 
 	// setup routes
